@@ -46,6 +46,7 @@
   ];
 
 
+
   const converDate = (date) =>{
     const currentDate = new Date(date);
   let dateNum = currentDate.getDate();
@@ -67,6 +68,7 @@
     }
     return dateNum + "." + monthNum + "." + yearNum + " " + hour + ":" + minute 
   }
+
 
 
 
@@ -99,6 +101,7 @@ commentsList.innerHTML="Страница грузится "
 apiRequestGet()
 
 
+
   function renderCommentsList() {
    const commentsHTML = commentsArray.map((comment,index)=>{
       return `<li class="comment">
@@ -129,6 +132,7 @@ apiRequestGet()
   renderCommentsList()
 
 
+
   function likeAdd() {
   const likesButton = document.querySelectorAll(".like-button");
     for (const likeButton of likesButton) {
@@ -149,7 +153,6 @@ apiRequestGet()
       })
     }
   }
-
 
   likeAdd()
 
@@ -249,7 +252,7 @@ if (nameInput.value=== "" || textInput.value=== ""){
 }
 
 
-   function commentsAnswer(){
+  function commentsAnswer(){
     const formInputText = document.querySelector(".add-form-text");
     const formName = document.querySelector(".add-form-name");
     const comments = document.querySelectorAll(".comment");
@@ -260,10 +263,9 @@ if (nameInput.value=== "" || textInput.value=== ""){
           
           
            })
-        });
+      });
    }   
     
-   
 
   document.addEventListener("keydown",(e)=>{
         if (e.key==="Enter") {
