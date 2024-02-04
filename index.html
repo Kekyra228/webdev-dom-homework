@@ -105,7 +105,7 @@ apiRequestGet()
       likeButton.addEventListener("click",()=>{
         const index = likeButton.dataset.index;
         if (commentsArray[index].isLike) {
-          commentsArray[index].likesCount--;
+          commentsArray[index].likes--;
           commentsArray[index].isLike = false;
          
         } else {
@@ -136,7 +136,7 @@ apiRequestGet()
           </div>
           <div class="comment-footer">
             <div class="likes">
-              <span class="likes-counter"  data-count=${comment.likesCount} >${comment.likesCount}</span>
+              <span class="likes-counter"  data-count=${comment.likes} >${comment.likes}</span>
               <button data-index=${index} class="like-button ${commentsArray[index].isLike ? "-active-like" : ""}" ></button
             </div>
           </div>
