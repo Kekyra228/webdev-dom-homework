@@ -41,22 +41,22 @@
   const commentsList = document.getElementById("comments");
   const addButton = document.getElementById("add-button");
 
-  const commentsArray = [
-  {
-      name: "Глеб Фокин",
-      date: "12.02.22 12:18",
-      text: "Это будет первый комментарий на этой странице",
-      likesCount: 3,
-      isLike: false,
-      isEdit: false
-    },
-    {name: "Варвара Н.",
-      date: "13.02.22 19:22",
-      text: "Мне нравится как оформлена эта страница! ❤",
-      likesCount: 75,
-      isLike: true,
-      isEdit: false
-    }
+  let commentsArray = [
+  // {
+  //     name: "Глеб Фокин",
+  //     date: "12.02.22 12:18",
+  //     text: "Это будет первый комментарий на этой странице",
+  //     likesCount: 3,
+  //     isLike: false,
+  //     isEdit: false
+  //   },
+  //   {name: "Варвара Н.",
+  //     date: "13.02.22 19:22",
+  //     text: "Мне нравится как оформлена эта страница! ❤",
+  //     likesCount: 75,
+  //     isLike: true,
+  //     isEdit: false
+  //   }
   ];
   
 
@@ -121,11 +121,11 @@ apiRequestGet()
       likeButton.addEventListener("click",()=>{
         const index = likeButton.dataset.index;
         if (commentsArray[index].isLike) {
-          commentsArray[index].likesCount--;
+          commentsArray[index].likes--;
           commentsArray[index].isLike = false;
          
         } else {
-          commentsArray[index].likesCount++;
+          commentsArray[index].likes++;
           commentsArray[index].isLike = true;
           
         }
@@ -150,7 +150,7 @@ apiRequestGet()
           </div>
           <div class="comment-footer">
             <div class="likes">
-              <span class="likes-counter"  data-count=${comment.likesCount} >${comment.likesCount}</span>
+              <span class="likes-counter"  data-count=${comment.likes} >${comment.likes}</span>
               <button data-index=${index} class="like-button ${commentsArray[index].isLike ? "-active-like" : ""}" ></button>
             </div>
           </div>
