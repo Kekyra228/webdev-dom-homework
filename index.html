@@ -165,7 +165,6 @@ apiRequestGet()
   renderCommentsList()
 
 
-
   function adding() {
     addButton.addEventListener('click', (event)=>{
     event.stopPropagation();
@@ -173,7 +172,6 @@ if (nameInput.value=== "" || textInput.value=== ""){
           console.log("а ну ка пиши коммент")
           return
 }
-
   textInput.disabled = true;
   nameInput.disabled = true;
  addButton.textContent = "Комментарий добавялется..."
@@ -240,8 +238,6 @@ if (nameInput.value=== "" || textInput.value=== ""){
   })
   }
  
-
-
 
   function commentsAnswer(){
     const formInputText = document.querySelector(".add-form-text");
