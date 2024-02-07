@@ -138,3 +138,11 @@ body {
   .loader {
     font-size: 32px;
   }
+  .editButton {
+    font-size: 14px;
+    padding: 10px 20px;
+    background-color: #bcec30;
+    border: none;
+    border-radius: 18px;
+  margin-left: 20px;
+  }
