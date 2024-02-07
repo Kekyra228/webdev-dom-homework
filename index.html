@@ -8,6 +8,7 @@
 
   <body>
     <div class="container">
+      <p class="loader">Загрузка...</p>
       <ul id="comments" class="comments">
       </ul>
       <div class="add-form">
@@ -40,6 +41,7 @@
   const textInput = document.getElementById("add-form-text");
   const commentsList = document.getElementById("comments");
   const addButton = document.getElementById("add-button");
+  const loader = document.querySelector(".loader")
 
   let commentsArray = [
   ];
@@ -72,6 +74,7 @@
 
 
 function apiRequestGet() {
+  commentsList.innerHTML="Страница грузится "
   fetch(
     'https://wedev-api.sky.pro/api/v1/:ivanova_Kate/comments',{
       method:"GET"
@@ -91,11 +94,11 @@ function apiRequestGet() {
             isEdit: false
           }
       })
-  
+      loader.style.display ="none"
       renderCommentsList()
     })
 }
-commentsList.innerHTML="Страница грузится "
+
 apiRequestGet()
 
 
