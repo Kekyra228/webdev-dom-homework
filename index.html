@@ -34,9 +34,8 @@
 
   <script>
     "use strict";
-    // Код писать здесь
-    
-    
+     
+
   const nameInput = document.getElementById("add-form-name");
   const textInput = document.getElementById("add-form-text");
   const commentsList = document.getElementById("comments");
@@ -99,10 +98,13 @@ function apiRequestGet() {
     })
 }
 
+
 apiRequestGet()
 
 
   function likeAdd() {
+
+
   const likesButton = document.querySelectorAll(".like-button");
     for (const likeButton of likesButton) {
       likeButton.addEventListener("click",()=>{
@@ -150,13 +152,16 @@ apiRequestGet()
           </div>
         </li>`
     }).join("");
+
         commentsList.innerHTML = commentsHTML
         likeAdd()
+
         commentsAnswer();
         editComments();
         adding()
   };
   renderCommentsList()
+
 
 
   function adding() {
@@ -315,9 +320,106 @@ if (nameInput.value=== "" || textInput.value=== ""){
    }
 
 
+  const currentDate = new Date();
+  let dateNum = currentDate.getDate();
+  if (dateNum < 10) { 
+   dateNum = "0" + dateNum; 
+  }
+  let monthNum = currentDate.getMonth()+1;
+  if (monthNum < 10) { 
+   monthNum = "0" + monthNum; 
+  }
+  let yearNum = currentDate.getFullYear().toString().substring(2)
+  let hour = currentDate.getHours();
+  if (hour < 10) { 
+   hour = "0" + hour; 
+  }
+  let minute = currentDate.getMinutes(); 
+  if (minute < 10) { 
+  minute = "0" + minute; 
+    }
+    
+
+    commentsArray.push({
+      nameCommentator: nameInput.value.replaceAll('>','&gt').replaceAll('<','&lt;'),
+      dateOfComment: `${dateNum}.${monthNum}.${yearNum} ${hour}:${minute}`,
+      textOfComent: textInput.value.replaceAll('>','&gt').replaceAll('<','&lt;'),
+      likesCount: 0,
+      isLike: false,
+      isEdit: true
+
+    })
+      renderCommentsList();
+  })
+}
 
 
+   function commentsAnswer(){
+    const formInputText = document.querySelector(".add-form-text");
+    const formName = document.querySelector(".add-form-name");
+    const comments = document.querySelectorAll(".comment");
+        comments.forEach((commentElement,index) => {
+           commentElement.addEventListener("click",()=>{
+            // formName.value = commentsArray[index].nameCommentator;
+          formInputText.value = `>${commentsArray[index].textOfComent} \n${commentsArray[index].nameCommentator},`;
+          
+          
+           })
+        });
+   }   
+    
+   
 
+  document.addEventListener("keydown",(e)=>{
+        if (e.key==="Enter") {
+           
+            if (nameInput.value=== "" || textInput.value=== ""){
+                    console.log("error")
+                    return
+             }
 
+            const currentDate = new Date();
+            let dateNum = currentDate.getDate();
+            if (dateNum < 10) { 
+            dateNum = "0" + dateNum; 
+            }
+            let monthNum = currentDate.getMonth()+1;
+            if (monthNum < 10) { 
+            monthNum = "0" + monthNum; 
+            }
+            let yearNum = currentDate.getFullYear().toString().substring(2)
+            let hour = currentDate.getHours();
+            if (hour < 10) { 
+            hour = "0" + hour; 
+            }
+            let minute = currentDate.getMinutes(); 
+            if (minute < 10) { 
+            minute = "0" + minute; 
+              }
+              
+
+                commentsArray.push({
+                nameCommentator: nameInput.value.replaceAll('>','&gt').replaceAll('<','&lt;'),
+                dateOfComment: `${dateNum}.${monthNum}.${yearNum} ${hour}:${minute}`,
+                textOfComent: textInput.value.replaceAll('>','&gt').replaceAll('<','&lt;'),
+                likesCount: 0,
+                isLike: false,
+                isEdit: true
+
+              })
+                
+                renderCommentsList();
+                editComments()
+        
+        
+        }
+      })
+      
+
+ 
+
+    
+
+        
   </script>
 </html>
