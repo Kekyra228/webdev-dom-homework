@@ -8,7 +8,7 @@
 
   <body>
     <div class="container">
-      <p class="loader">Загрузка...</p>
+      <!-- <p class="loader">Загрузка...</p> -->
       <ul id="comments" class="comments">
       </ul>
       <div class="add-form">
@@ -70,11 +70,10 @@
   }
 
 
-
+  let isLoading = true;
 
 
 function apiRequestGet() {
-  commentsList.innerHTML="Страница грузится "
   fetch(
     'https://wedev-api.sky.pro/api/v1/:ivanova_Kate/comments',{
       method:"GET"
@@ -94,13 +93,13 @@ function apiRequestGet() {
             isEdit: false
           }
       })
-      loader.style.display ="none"
+      // loader.style.display ="none"
+      isLoading = false;
       renderCommentsList()
     })
 }
 
 apiRequestGet()
-
 
 
 
@@ -126,6 +125,11 @@ apiRequestGet()
   likeAdd()
 
   function renderCommentsList() {
+    if (isLoading) {
+        document.getElementById("comments").innerHTML =
+          "Пожалуйста подождите, загружаю комментарии...";
+        return;
+      }
    const commentsHTML = commentsArray.map((comment,index)=>{
       return `<li class="comment">
           <div class="comment-header">
@@ -165,7 +169,6 @@ if (nameInput.value=== "" || textInput.value=== ""){
   textInput.disabled = true;
   nameInput.disabled = true;
  addButton.textContent = "Комментарий добавялется..."
-
 
   const currentDate = new Date();
   let dateNum = currentDate.getDate();
