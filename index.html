@@ -8,6 +8,7 @@
 
   <body>
     <div class="container">
+      <!-- <p class="loader">Загрузка...</p> -->
       <ul id="comments" class="comments">
       </ul>
       <div class="add-form">
@@ -39,6 +40,7 @@
   const textInput = document.getElementById("add-form-text");
   const commentsList = document.getElementById("comments");
   const addButton = document.getElementById("add-button");
+  const loader = document.querySelector(".loader")
 
   let commentsArray = [
   ];
@@ -67,7 +69,7 @@
   }
 
 
-
+  let isLoading = true;
 
 
 function apiRequestGet() {
@@ -90,15 +92,19 @@ function apiRequestGet() {
             isEdit: false
           }
       })
-  
+      // loader.style.display ="none"
+      isLoading = false;
       renderCommentsList()
     })
 }
-commentsList.innerHTML="Страница грузится "
+
+
 apiRequestGet()
 
 
-function likeAdd() {
+  function likeAdd() {
+
+
   const likesButton = document.querySelectorAll(".like-button");
     for (const likeButton of likesButton) {
       likeButton.addEventListener("click",()=>{
@@ -121,6 +127,11 @@ function likeAdd() {
 
 
   function renderCommentsList() {
+    if (isLoading) {
+        document.getElementById("comments").innerHTML =
+          "Пожалуйста подождите, загружаю комментарии...";
+        return;
+      }
    const commentsHTML = commentsArray.map((comment,index)=>{
       return `<li class="comment">
           <div class="comment-header">
@@ -163,7 +174,6 @@ if (nameInput.value=== "" || textInput.value=== ""){
   textInput.disabled = true;
   nameInput.disabled = true;
  addButton.textContent = "Комментарий добавялется..."
-
 
   const currentDate = new Date();
   let dateNum = currentDate.getDate();
@@ -300,7 +310,7 @@ if (nameInput.value=== "" || textInput.value=== ""){
                 event.stopPropagation();
                commentsArray[index].isEdit = !commentsArray[index].isEdit;
                if(commentsArray.isEdit){
-                  commentsArray.textOfComent = editedComment.value
+                  commentsArray.text = editedComment.value
                }
                renderCommentsList()
 

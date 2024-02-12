@@ -135,6 +135,11 @@ body {
   .add-form-button:hover {
     opacity: 0.9;
   }
+
+  .loader {
+    font-size: 32px;
+  }
+
   .editButton {
     font-size: 14px;
     padding: 10px 20px;
