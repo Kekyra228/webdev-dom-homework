@@ -7,3 +7,7 @@ export function getComments() {
         return response.json()
       })
 }
+
+export function postComments(){
+  
+}

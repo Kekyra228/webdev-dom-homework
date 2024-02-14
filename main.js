@@ -178,25 +178,23 @@ if (nameInput.value=== "" || textInput.value=== ""){
       )
 
       apiResult.then((response)=>{
-      if(response.status===500){
-        throw new Error("Сервер сломался, попробуй позже")
+      if(response.status===201){
+        apiRequestGet()
+
+        textInput.disabled = false;
+        nameInput.disabled = false;
+        addButton.textContent = "Написать"
+        nameInput.value="";
+        textInput.value=""
       }
       else if (response.status===400){
         throw new Error("Имя и комментарий должны быть не короче 3 символов")
       }
-      else {
-        throw new Error ("Упал интернет")
+      else if (response.status===500){
+        throw new Error("Сервер сломался, попробуй позже")
       }
       })
-      .then(()=>{
-      apiRequestGet()
-
-          textInput.disabled = false;
-          nameInput.disabled = false;
-          addButton.textContent = "Написать"
-          nameInput.value="";
-          textInput.value=""
-    })
+    
         .catch((error)=>{
         
         textInput.disabled = false;
