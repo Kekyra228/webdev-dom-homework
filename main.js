@@ -1,39 +1,23 @@
 "use strict";
 
 import { getComments } from "./api.js";
+import { postComments } from "./api.js";
+import { dateForGetRequest } from "./converDate.js";
+import { render } from "./render.js";
 
-     
 
-  const nameInput = document.getElementById("add-form-name");
-  const textInput = document.getElementById("add-form-text");
   const commentsList = document.getElementById("comments");
   const addButton = document.getElementById("add-button");
-  const loader = document.querySelector(".loader")
+  const loader = document.querySelector(".loader");
+  const nameInput = document.getElementById("add-form-name");
+  const textInput = document.getElementById("add-form-text");
 
   let commentsArray = [
   ];
   
 
   const converDate = (date) =>{
-    const currentDate = new Date(date);
-  let dateNum = currentDate.getDate();
-  if (dateNum < 10) { 
-   dateNum = "0" + dateNum; 
-  }
-  let monthNum = currentDate.getMonth()+1;
-  if (monthNum < 10) { 
-   monthNum = "0" + monthNum; 
-  }
-  let yearNum = currentDate.getFullYear().toString().substring(2)
-  let hour = currentDate.getHours();
-  if (hour < 10) { 
-   hour = "0" + hour; 
-  }
-  let minute = currentDate.getMinutes(); 
-  if (minute < 10) { 
-  minute = "0" + minute; 
-    }
-    return dateNum + "." + monthNum + "." + yearNum + " " + hour + ":" + minute 
+    dateForGetRequest(date)
   }
 
 
@@ -47,7 +31,7 @@ import { getComments } from "./api.js";
       commentsArray = responseData.comments.map((comment)=>{
           return {
             name: comment.author.name,
-            date: converDate(comment.date),
+            date: dateForGetRequest(comment.date),
             text: comment.text,
             likes: comment.likes,
             isLike: false,
@@ -65,7 +49,7 @@ import { getComments } from "./api.js";
 
 
   function likeAdd() {
-  const likesButton = document.querySelectorAll(".like-button");
+    const likesButton = document.querySelectorAll(".like-button");
     for (const likeButton of likesButton) {
       likeButton.addEventListener("click",()=>{
         const index = likeButton.dataset.index;
@@ -78,10 +62,10 @@ import { getComments } from "./api.js";
           commentsArray[index].isLike = true;
           
         }
-        
         renderCommentsList();
       })
     }
+
   }
   likeAdd()
 
@@ -92,28 +76,7 @@ import { getComments } from "./api.js";
           "Пожалуйста подождите, загружаю комментарии...";
         return;
       }
-   const commentsHTML = commentsArray.map((comment,index)=>{
-      return `<li class="comment">
-          <div class="comment-header">
-            <div>${comment.name}</div>
-            <div>${comment.date}</div>
-          </div>
-          <div class="comment-body">
-            <div class="comment-text">
-             ${comment.text}
-            </div>
-          </div>
-          <div class="comment-footer">
-            <div class="likes">
-              <span class="likes-counter"  data-count=${comment.likes} >${comment.likes}</span>
-              <button data-index=${index} class="like-button ${commentsArray[index].isLike ? "-active-like" : ""}" ></button>
-              <button data-index=${index} class ="editButton"> ${commentsArray[index].isEdit? "Сохранить":"Редактировать"} </button>
-            </div>
-          </div>
-        </li>`
-    }).join("");
-
-        commentsList.innerHTML = commentsHTML
+      render (commentsArray, commentsList)
         likeAdd()
 
         commentsAnswer();
@@ -135,29 +98,14 @@ if (nameInput.value=== "" || textInput.value=== ""){
   nameInput.disabled = true;
  addButton.textContent = "Комментарий добавялется..."
 
-  const currentDate = new Date();
-  let dateNum = currentDate.getDate();
-  if (dateNum < 10) { 
-   dateNum = "0" + dateNum; 
-  }
-  let monthNum = currentDate.getMonth()+1;
-  if (monthNum < 10) { 
-   monthNum = "0" + monthNum; 
-  }
-  let yearNum = currentDate.getFullYear().toString().substring(2)
-  let hour = currentDate.getHours();
-  if (hour < 10) { 
-   hour = "0" + hour; 
-  }
-  let minute = currentDate.getMinutes(); 
-  if (minute < 10) { 
-  minute = "0" + minute; 
-    }
-    
+ 
+const converDate = (date) =>{
+  dateForGetRequest(date)
+}
 
     commentsArray.push({
       name: nameInput.value.replaceAll('>','&gt').replaceAll('<','&lt;'),
-      date: `${dateNum}.${monthNum}.${yearNum} ${hour}:${minute}`,
+      date: dateForGetRequest(),
       text: textInput.value.replaceAll('>','&gt').replaceAll('<','&lt;'),
       likes: 0,
       isLike: false,
@@ -166,18 +114,8 @@ if (nameInput.value=== "" || textInput.value=== ""){
     })
 
      function apiRequestPost() {
-      const apiResult = fetch(
-        'https://wedev-api.sky.pro/api/v1/:ivanova_Kate/comments',{
-          method:"POST",
-          body: JSON.stringify({
-            text: textInput.value,
-            name: nameInput.value,
-            forceError: true
-          })
-        }
-      )
-
-      apiResult.then((response)=>{
+      postComments()
+      .then((response)=>{
       if(response.status===201){
         apiRequestGet()
 
@@ -193,6 +131,9 @@ if (nameInput.value=== "" || textInput.value=== ""){
       else if (response.status===500){
         throw new Error("Сервер сломался, попробуй позже")
       }
+      else{
+        throw new Error ("Упал интренет")
+      }
       })
     
         .catch((error)=>{
@@ -207,9 +148,10 @@ if (nameInput.value=== "" || textInput.value=== ""){
         else if(error.message==="Имя и комментарий должны быть не короче 3 символов"){
           alert("Имя и комментарий должны быть не короче 3 символов")
         }
-        else if(error.message==="Упал интернет"){
+        else{
           alert("Упал интрернет")
         }
+        
      }
     )}
 
@@ -224,7 +166,7 @@ if (nameInput.value=== "" || textInput.value=== ""){
     const formName = document.querySelector(".add-form-name");
     const comments = document.querySelectorAll(".comment");
         comments.forEach((commentElement,index) => {
-           commentElement.addEventListener("click",()=>{
+          commentElement.addEventListener("click",()=>{
           formInputText.value = `>${commentsArray[index].text} \n${commentsArray[index].name},`;
           
            })
@@ -236,46 +178,70 @@ if (nameInput.value=== "" || textInput.value=== ""){
   document.addEventListener("keydown",(e)=>{
         if (e.key==="Enter") {
            
-            if (nameInput.value=== "" || textInput.value=== ""){
-                    console.log("error")
+          event.stopPropagation();
+          if (nameInput.value=== "" || textInput.value=== ""){
+                    console.log("а ну ка пиши коммент")
                     return
-             }
+          }
+            textInput.disabled = true;
+            nameInput.disabled = true;
+           addButton.textContent = "Комментарий добавялется..."
+          
 
-            const currentDate = new Date();
-            let dateNum = currentDate.getDate();
-            if (dateNum < 10) { 
-            dateNum = "0" + dateNum; 
-            }
-            let monthNum = currentDate.getMonth()+1;
-            if (monthNum < 10) { 
-            monthNum = "0" + monthNum; 
-            }
-            let yearNum = currentDate.getFullYear().toString().substring(2)
-            let hour = currentDate.getHours();
-            if (hour < 10) { 
-            hour = "0" + hour; 
-            }
-            let minute = currentDate.getMinutes(); 
-            if (minute < 10) { 
-            minute = "0" + minute; 
-              }
-              
-
-                commentsArray.push({
+          const converDate = (date) =>{
+            dateForGetRequest(date)
+          }
+          
+              commentsArray.push({
                 name: nameInput.value.replaceAll('>','&gt').replaceAll('<','&lt;'),
-                date: `${dateNum}.${monthNum}.${yearNum} ${hour}:${minute}`,
+                date: dateForGetRequest(),
                 text: textInput.value.replaceAll('>','&gt').replaceAll('<','&lt;'),
                 likes: 0,
                 isLike: false,
                 isEdit: false
-
+          
               })
-                
-                renderCommentsList();
-                editComments()
+          
+               function apiRequestPost() {
+                postComments()
+                .then((response)=>{
+                if(response.status===201){
+                  apiRequestGet()
+          
+                  textInput.disabled = false;
+                  nameInput.disabled = false;
+                  addButton.textContent = "Написать"
+                  nameInput.value="";
+                  textInput.value=""
+                }
+                else if (response.status===400){
+                  throw new Error("Имя и комментарий должны быть не короче 3 символов")
+                }
+                else if (response.status===500){
+                  throw new Error("Сервер сломался, попробуй позже")
+                }
+                })
               
-                nameInput.value="";
-                textInput.value=""
+                  .catch((error)=>{
+                  
+                  textInput.disabled = false;
+                  nameInput.disabled = false;
+                  addButton.textContent = "Написать";
+          
+                  if(error.message==="Сервер сломался, попробуй позже"){
+                    alert("Сервер сломался, попробуй позже")
+                  }
+                  else if(error.message==="Имя и комментарий должны быть не короче 3 символов"){
+                    alert("Имя и комментарий должны быть не короче 3 символов")
+                  }
+                  else if(error.message==="Упал интернет"){
+                    alert("Упал интрернет")
+                  }
+               }
+              )}
+          
+            apiRequestPost()
+
         
         }
       })
@@ -300,4 +266,3 @@ if (nameInput.value=== "" || textInput.value=== ""){
 
         });
    }
-сч
