@@ -17,7 +17,7 @@ export function postComments(){
       body: JSON.stringify({
         text: textInput.value,
         name: nameInput.value,
-        forceError: true
+        // forceError: true
       })
     }
   ) 

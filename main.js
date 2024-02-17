@@ -78,10 +78,9 @@ import { render } from "./render.js";
       }
       render (commentsArray, commentsList)
         likeAdd()
-
         commentsAnswer();
         editComments();
-        adding()
+        
   };
   renderCommentsList()
 
@@ -99,7 +98,7 @@ if (nameInput.value=== "" || textInput.value=== ""){
  addButton.textContent = "Комментарий добавялется..."
 
  
-const converDate = (date) =>{
+  const converDate = (date) =>{
   dateForGetRequest(date)
 }
 
@@ -134,9 +133,7 @@ const converDate = (date) =>{
       else{
         throw new Error ("Упал интренет")
       }
-      })
-    
-        .catch((error)=>{
+      }) .catch((error)=>{
         
         textInput.disabled = false;
         nameInput.disabled = false;
@@ -160,6 +157,8 @@ const converDate = (date) =>{
   })
   }
  
+  adding()
+  renderCommentsList()
 
   function commentsAnswer(){
     const formInputText = document.querySelector(".add-form-text");
