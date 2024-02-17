@@ -85,7 +85,6 @@ import { render } from "./render.js";
   renderCommentsList()
 
 
-
   function adding() {
     addButton.addEventListener('click', (event)=>{
     event.stopPropagation();
@@ -101,6 +100,7 @@ if (nameInput.value=== "" || textInput.value=== ""){
   const converDate = (date) =>{
   dateForGetRequest(date)
 }
+
 
     commentsArray.push({
       name: nameInput.value.replaceAll('>','&gt').replaceAll('<','&lt;'),
@@ -172,8 +172,7 @@ if (nameInput.value=== "" || textInput.value=== ""){
         });
    }   
     
-   
-
+  
   document.addEventListener("keydown",(e)=>{
         if (e.key==="Enter") {
            
