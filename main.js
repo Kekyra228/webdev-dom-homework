@@ -8,6 +8,9 @@ import { edit } from "./interaction.js";
 import { like } from "./interaction.js";
 import { answering } from "./interaction.js";
 
+import { renderLoginPage } from "./login.js";
+
+
   const commentsList = document.getElementById("comments");
   const addButton = document.getElementById("add-button");
   const nameInput = document.getElementById("add-form-name");
@@ -16,9 +19,9 @@ import { answering } from "./interaction.js";
   let commentsArray = [
   ];
   
-
-
   let isLoading = true;
+ 
+  renderLoginPage()
 
 
   const apiRequestGet = () => {
@@ -35,14 +38,13 @@ import { answering } from "./interaction.js";
             isEdit: false
           }
       })
-      // loader.style.display ="none"
     
       isLoading = false;
       renderCommentsList()
     })
   }
 
-  apiRequestGet()
+  // apiRequestGet()
 
 
   function likeAdd() {
@@ -60,22 +62,37 @@ import { answering } from "./interaction.js";
   likeAdd()
 
 
-  function renderCommentsList() {
+
+
+  export function renderCommentsList() {
     if (isLoading) {
         document.getElementById("comments").innerHTML =
           "Пожалуйста подождите, загружаю комментарии...";
         return;
       }
-      render (commentsArray, commentsList)
+        render (commentsArray, commentsList)
         likeAdd()
         commentsAnswer();
-        editComments();
+        edit(commentsArray);
+        autorization()
         
   };
   renderCommentsList()
 
+//   let isAuto = false;
+
+// function autorization() {
+//   const authButton = document.querySelector(".auth")
+//   addButton.addEventListener("click",()=>{
+//     console.log("www")
+//     isAuto=!isAuto
+//     renderCommentsList()
+//   })
+// }
+
 
 const adding=()=>{
+
   addButton.addEventListener('click', (event)=>{
     event.stopPropagation();
 if (nameInput.value=== "" || textInput.value=== ""){
@@ -97,7 +114,10 @@ commentsArray.push({
 })
 
  function apiRequestPost() {
-  postComments()
+  const nameInput = document.getElementById("add-form-name");
+  const textInput = document.getElementById("add-form-text");
+
+  postComments(textInput.value, nameInput.value)
   .then((response)=>{
   if(response.status===201){
     apiRequestGet()
@@ -114,6 +134,9 @@ commentsArray.push({
   else if (response.status===500){
     throw new Error("Сервер сломался, попробуй позже")
   }
+  else if(response.status===404){
+    throw new Error("Нет авторизации")
+  }
   else{
     throw new Error ("Упал интренет")
   }
@@ -128,6 +151,9 @@ commentsArray.push({
     }
     else if(error.message==="Имя и комментарий должны быть не короче 3 символов"){
       alert("Имя и комментарий должны быть не короче 3 символов")
+    }
+    else if(error.message==="Нет авторизации"){
+      alert("Нет авторизации")
     }
     else{
       alert("Упал интрернет")
@@ -152,22 +178,9 @@ apiRequestPost()
         }
       })
 
+     
 
 
-      function editComments(){
-          const editedComment = document.querySelectorAll('.comment-edited-text')
-          const editButtons = document.querySelectorAll(".editButton");
-
-        editButtons.forEach((editButton,index) => {
-            editButton.addEventListener("click",(event)=>{
-                event.stopPropagation();
-
-                edit(commentsArray,index)
-                renderCommentsList()
-              })
-
-        });
-   }
 
    function commentsAnswer(){
    
