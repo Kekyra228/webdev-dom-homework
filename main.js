@@ -44,7 +44,7 @@ import { renderLoginPage } from "./login.js";
     })
   }
 
-  // apiRequestGet()
+  apiRequestGet()
 
 
   function likeAdd() {

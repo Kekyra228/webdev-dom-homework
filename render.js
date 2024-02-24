@@ -1,33 +1,30 @@
 export function render (commentsArray, commentsList) {
   const appRendering = document.getElementById("app")
-  let isAuto = false;
 
-
-const addFormHtml = document.querySelector(".container")
-
-  const formHtml=`<div class="add-form">
-      <input
-        type="text"
-        id="add-form-name"
-        class="add-form-name"
-        placeholder="Введите ваше имя"
-      />
-      <textarea
-        type="textarea"
-        id="add-form-text"
-        class="add-form-text"
-        placeholder="Введите ваш коментарий"
-        rows="4"
-      ></textarea>
-      <div class="add-form-row">
-        <button id="add-button" class="add-form-button">Написать</button>
-      </div>
-    </div>`
-
+// let isAuto = false
+// const addFormHtml = document.querySelector(".container")
+//   const formHtml=`<div class="add-form">
+//       <input
+//         type="text"
+//         id="add-form-name"
+//         class="add-form-name"
+//         placeholder="Введите ваше имя"
+//       />
+//       <textarea
+//         type="textarea"
+//         id="add-form-text"
+//         class="add-form-text"
+//         placeholder="Введите ваш коментарий"
+//         rows="4"
+//       ></textarea>
+//       <div class="add-form-row">
+//         <button id="add-button" class="add-form-button">Написать</button>
+//       </div>
+//     </div>`
 
 
     const commentsHTML = commentsArray.map((comment,index)=>{
-        return `<li class="comment">${commentsHTML}
+        return `<li class="comment">
             <div class="comment-header">
               <div>${comment.name}</div>
               <div>${comment.date}</div>
@@ -63,7 +60,8 @@ const addFormHtml = document.querySelector(".container")
         <br />
         <button class="button" id="login-button">Войти</button>
         <a href="index.html" id="link-to-tasks">Перейти на страницу задач</a>
-      </div> `
+      </div> 
+      ${commentsHTML}`
       appRendering.innerHTML = appHtml;
       
       
@@ -75,8 +73,6 @@ const addFormHtml = document.querySelector(".container")
       //   ${isAuto ? formHtml : "Чтобы добавить комментарий, нужно авторизоваться"}
       //   <button class="auth">Авторизоваться</button>
       //   `
-
-
 
 
   
