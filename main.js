@@ -45,36 +45,23 @@ import { renderLoginPage } from "./login.js";
   apiRequestGet()
 
 
-  function likeAdd() {
-    const likesButton = document.querySelectorAll(".like-button");
-    for (const likeButton of likesButton) {
-      likeButton.addEventListener("click",(event)=>{
-        const index = likeButton.dataset.index;
-        event.stopPropagation();
-        like(commentsArray, index)
-        renderCommentsList();
-      })
-    }
-
-  }
-  likeAdd()
 
 
 
 
-  export function renderCommentsList() {
+  export function renderCommentsList(commentsArray) {
     if (isLoading) {
         document.getElementById("comments").innerHTML =
           "Пожалуйста подождите, загружаю комментарии...";
         return;
       }
-        render (commentsArray, commentsList)
+        render ({commentsArray: commentsArray, commentsList})
         likeAdd()
         commentsAnswer();
         edit(commentsArray);
         
   };
-  renderCommentsList()
+  renderCommentsList(commentsArray)
 
 //   let isAuto = false;
 
@@ -91,7 +78,7 @@ import { renderLoginPage } from "./login.js";
 
  
   // adding()
-  renderCommentsList()
+  renderCommentsList(commentsArray)
 
 
   
@@ -104,6 +91,19 @@ import { renderLoginPage } from "./login.js";
      
 
 
+      function likeAdd() {
+        const likesButton = document.querySelectorAll(".like-button");
+        for (const likeButton of likesButton) {
+          likeButton.addEventListener("click",(event)=>{
+            const index = likeButton.dataset.index;
+            event.stopPropagation();
+            like(commentsArray, index)
+            renderCommentsList();
+          })
+        }
+    
+      }
+      likeAdd()
 
    function commentsAnswer(){
    

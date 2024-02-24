@@ -1,4 +1,4 @@
-export function render ({commentsArray, }) {
+export function render ({commentsArray, commentsList}) {
   const appRendering = document.getElementById("app")
 
 // let isAuto = false
@@ -59,7 +59,7 @@ export function render ({commentsArray, }) {
         </div>
         <br />
         <button class="button" id="login-button">Войти</button>
-        <a href="index.html" id="link-to-tasks">Перейти на страницу задач</a>
+       
       </div> 
       ${commentsHTML}`
       appRendering.innerHTML = appHtml;

@@ -14,7 +14,7 @@ export function edit(commentsArray) {
              commentsArray[index].text = editedComment[index].value
           }
 
-          renderCommentsList()
+          renderCommentsList(commentsArray)
         
         })
 

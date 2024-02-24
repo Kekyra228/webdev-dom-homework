@@ -5,8 +5,11 @@
 
 
 
-export const token =
-"asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k"
+export let token;
+export const setToken = (newToken) => {
+  token = newToken;
+};
+
 
 
 export function getComments() {

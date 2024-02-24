@@ -1,4 +1,5 @@
-import { loginUser } from "./api.js"
+import { loginUser, setToken, token } from "./api.js"
+import { renderCommentsList } from "./main.js"
 
 export function renderLoginPage() {
     const appRendering = document.getElementById("app")
@@ -30,6 +31,11 @@ export function renderLoginPage() {
                 password:passwordInput.value
             }).then((responseData)=>{
             console.log(responseData)
+            setToken(responseData.user.token)
+            console.log(token
+              )
+            }).then(()=>{
+              renderCommentsList(commentsArray)
             })
         })
 }
