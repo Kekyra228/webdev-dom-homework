@@ -7,12 +7,10 @@ import { render } from "./render.js";
 import { edit } from "./interaction.js";
 import { like } from "./interaction.js";
 import { answering } from "./interaction.js";
-
 import { renderLoginPage } from "./login.js";
 
 
   const commentsList = document.getElementById("comments");
-  const addButton = document.getElementById("add-button");
   const nameInput = document.getElementById("add-form-name");
   const textInput = document.getElementById("add-form-text");
 
@@ -74,7 +72,6 @@ import { renderLoginPage } from "./login.js";
         likeAdd()
         commentsAnswer();
         edit(commentsArray);
-        autorization()
         
   };
   renderCommentsList()
@@ -91,83 +88,9 @@ import { renderLoginPage } from "./login.js";
 // }
 
 
-const adding=()=>{
 
-  addButton.addEventListener('click', (event)=>{
-    event.stopPropagation();
-if (nameInput.value=== "" || textInput.value=== ""){
-          console.log("а ну ка пиши коммент")
-          return
-}
-  textInput.disabled = true;
-  nameInput.disabled = true;
-  addButton.textContent = "Комментарий добавялется..."
-
-commentsArray.push({
-  name: nameInput.value.replaceAll('>','&gt').replaceAll('<','&lt;'),
-  date: dateForGetRequest(),
-  text: textInput.value.replaceAll('>','&gt').replaceAll('<','&lt;'),
-  likes: 0,
-  isLike: false,
-  isEdit: false
-
-})
-
- function apiRequestPost() {
-  const nameInput = document.getElementById("add-form-name");
-  const textInput = document.getElementById("add-form-text");
-
-  postComments(textInput.value, nameInput.value)
-  .then((response)=>{
-  if(response.status===201){
-    apiRequestGet()
-
-    textInput.disabled = false;
-    nameInput.disabled = false;
-    addButton.textContent = "Написать"
-    nameInput.value="";
-    textInput.value=""
-  }
-  else if (response.status===400){
-    throw new Error("Имя и комментарий должны быть не короче 3 символов")
-  }
-  else if (response.status===500){
-    throw new Error("Сервер сломался, попробуй позже")
-  }
-  else if(response.status===404){
-    throw new Error("Нет авторизации")
-  }
-  else{
-    throw new Error ("Упал интренет")
-  }
-  }) .catch((error)=>{
-    
-    textInput.disabled = false;
-    nameInput.disabled = false;
-    addButton.textContent = "Написать";
-
-    if(error.message==="Сервер сломался, попробуй позже"){
-      alert("Сервер сломался, попробуй позже")
-    }
-    else if(error.message==="Имя и комментарий должны быть не короче 3 символов"){
-      alert("Имя и комментарий должны быть не короче 3 символов")
-    }
-    else if(error.message==="Нет авторизации"){
-      alert("Нет авторизации")
-    }
-    else{
-      alert("Упал интрернет")
-    }
-    
- }
-)}
-
-apiRequestPost()
-
-})
-}
  
-  adding()
+  // adding()
   renderCommentsList()
 
 

@@ -1,4 +1,4 @@
-export function render (commentsArray, commentsList) {
+export function render ({commentsArray, }) {
   const appRendering = document.getElementById("app")
 
 // let isAuto = false
@@ -64,7 +64,85 @@ export function render (commentsArray, commentsList) {
       ${commentsHTML}`
       appRendering.innerHTML = appHtml;
       
+     
+      const addButton = document.getElementById("add-button");
+
+      const adding=()=>{
+
+        addButton.addEventListener('click', (event)=>{
+          event.stopPropagation();
+      if (nameInput.value=== "" || textInput.value=== ""){
+                console.log("а ну ка пиши коммент")
+                return
+      }
+        textInput.disabled = true;
+        nameInput.disabled = true;
+        addButton.textContent = "Комментарий добавялется..."
       
+      commentsArray.push({
+        name: nameInput.value.replaceAll('>','&gt').replaceAll('<','&lt;'),
+        date: dateForGetRequest(),
+        text: textInput.value.replaceAll('>','&gt').replaceAll('<','&lt;'),
+        likes: 0,
+        isLike: false,
+        isEdit: false
+      
+      })
+      
+       function apiRequestPost() {
+        const nameInput = document.getElementById("add-form-name");
+        const textInput = document.getElementById("add-form-text");
+      
+        postComments(textInput.value, nameInput.value)
+        .then((response)=>{
+        if(response.status===201){
+          apiRequestGet()
+      
+          textInput.disabled = false;
+          nameInput.disabled = false;
+          addButton.textContent = "Написать"
+          nameInput.value="";
+          textInput.value=""
+        }
+        else if (response.status===400){
+          throw new Error("Имя и комментарий должны быть не короче 3 символов")
+        }
+        else if (response.status===500){
+          throw new Error("Сервер сломался, попробуй позже")
+        }
+        else if(response.status===404){
+          throw new Error("Нет авторизации")
+        }
+        else{
+          throw new Error ("Упал интренет")
+        }
+        }) .catch((error)=>{
+          
+          textInput.disabled = false;
+          nameInput.disabled = false;
+          addButton.textContent = "Написать";
+      
+          if(error.message==="Сервер сломался, попробуй позже"){
+            alert("Сервер сломался, попробуй позже")
+          }
+          else if(error.message==="Имя и комментарий должны быть не короче 3 символов"){
+            alert("Имя и комментарий должны быть не короче 3 символов")
+          }
+          else if(error.message==="Нет авторизации"){
+            alert("Нет авторизации")
+          }
+          else{
+            alert("Упал интрернет")
+          }
+          
+       }
+      )}
+      
+      apiRequestPost()
+      
+      })
+      }
+
       // addFormHtml.innerHTML = 
       //   `
       //   <ul id="comments" class="comments">
