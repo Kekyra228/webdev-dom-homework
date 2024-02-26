@@ -7,8 +7,7 @@ import { apiRequestGet } from "./main.js";
 export function render ({commentsArray, commentsList}) {
   const appRendering = document.getElementById("app")
 
-// let isAuto = false
-// const addFormHtml = document.querySelector(".container")
+  
   const formHtml=`<div class="add-form">
       <input
         type="text"
@@ -165,17 +164,7 @@ if(token) return
 navToLogin()
 adding()
 
-      // addFormHtml.innerHTML = 
-      //   `
-      //   <ul id="comments" class="comments">
-      //   ${commentsHTML}
-      //   </ul>
-      //   ${isAuto ? formHtml : "Чтобы добавить комментарий, нужно авторизоваться"}
-      //   <button class="auth">Авторизоваться</button>
-      //   `
 
-
-  
 }
 
 

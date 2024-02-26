@@ -1,9 +1,3 @@
-// export let token;
-// export const SetToken=(newToken)=>{
-// token=newToken
-// }
-
-
 
 export let token;
 export const setToken = (newToken) => {

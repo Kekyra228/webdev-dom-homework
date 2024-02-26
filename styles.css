@@ -185,3 +185,12 @@ body {
     border: none;
     padding-left: 10px;
   }
+  .auth{
+    margin-top: 20px;
+    font-size: 14px;
+    padding: 10px 20px;
+    background-color: #bcec30;
+    border: none;
+    border-radius: 18px;
+  margin-left: 20px;
+  }
