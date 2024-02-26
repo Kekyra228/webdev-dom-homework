@@ -57,22 +57,25 @@ export function render ({commentsArray, commentsList}) {
         ${token ? formHtml :  '<button class="auth"> Авторизоваться </button>'} 
         `
 
-      
+       
         
 
 
       appRendering.innerHTML = appHtml;
-    
-    
 
+     
 
       const adding=()=>{
   
         if(!token) return
 
         const addButton = document.getElementById("add-button");
-        const nameInput = document.getElementById("add-form-name");
         const textInput = document.getElementById("add-form-text");
+        const nameInput = document.getElementById("add-form-name");
+        
+        nameInput.innerHTML=loginInput.value,
+        nameInput.disabled = true;
+  
 
         addButton.addEventListener('click', (event)=>{
           event.stopPropagation();
@@ -81,7 +84,6 @@ export function render ({commentsArray, commentsList}) {
                 return
       }
         textInput.disabled = true;
-        nameInput.disabled = true;
         addButton.textContent = "Комментарий добавялется..."
       
       commentsArray.push({

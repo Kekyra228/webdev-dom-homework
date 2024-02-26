@@ -47,3 +47,38 @@ export function loginUser({ login, password }) {
     return response.json();
   });
 }
+
+export function regUser ({nameUser, login, password}){
+
+  return fetch("https://wedev-api.sky.pro/api/user", {
+    method: "post",
+    body: JSON.stringify({
+      nameUser,
+      login,
+      password
+    }),
+  })
+    .then((response) => {
+      if (response.status === 201) {
+        return response;
+      } else if (response.status === 400) {
+        throw new Error("ошибка 400");
+      }
+    })
+    .then((response) => {
+      return response.json();
+    })
+    .then((responseData) => {
+      alert("Вы успешно зарегистрировались.");
+      loginRegInput.value = "";
+      nameRegInput.value = "";
+      passwordRegInput.value = "";
+    })
+    .catch((error) => {
+      if (error.message === "ошибка 400") {
+        alert("Пользователь с такими данными уже есть, попробуйте снова");
+      } else {
+        alert("Кажется, у вас сломался интернет, попробуйте позже");
+      }
+    });
+};

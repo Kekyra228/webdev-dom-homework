@@ -63,26 +63,6 @@ import { renderLoginPage } from "./login.js";
 
 
 
-  // renderCommentsList(commentsArray)
-
-//   let isAuto = false;
-
-// function autorization() {
-//   const authButton = document.querySelector(".auth")
-//   addButton.addEventListener("click",()=>{
-//     console.log("www")
-//     isAuto=!isAuto
-//     renderCommentsList()
-//   })
-// }
-
-
-
- 
-  // adding()
-  // renderCommentsList(commentsArray)
-
-
   
   document.addEventListener("keydown",(e)=>{
         if (e.key==="Enter") {
