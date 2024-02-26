@@ -14,7 +14,7 @@ export const setToken = (newToken) => {
 
 export function getComments() {
     return fetch(
-        'https://wedev-api.sky.pro/api/v1/:ivanova-kit/comments',{
+        'https://wedev-api.sky.pro/api/v2/ivanova-kit/comments',{
           method:"GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -28,7 +28,7 @@ export function getComments() {
 export function postComments(textInput, nameInput){
   
   return fetch(
-    'https://wedev-api.sky.pro/api/v2/:ivanova-kit',{
+    'https://wedev-api.sky.pro/api/v2/ivanova-kit/comments',{
       method:"POST",
       headers: {
         Authorization: `Bearer ${token}`,

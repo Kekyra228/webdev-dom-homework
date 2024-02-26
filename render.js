@@ -1,26 +1,32 @@
+import { postComments, token } from "./api.js";
+import { dateForGetRequest } from "./converDate.js";
+import { renderLoginPage } from "./login.js";
+import { apiRequestGet } from "./main.js";
+
+
 export function render ({commentsArray, commentsList}) {
   const appRendering = document.getElementById("app")
 
 // let isAuto = false
 // const addFormHtml = document.querySelector(".container")
-//   const formHtml=`<div class="add-form">
-//       <input
-//         type="text"
-//         id="add-form-name"
-//         class="add-form-name"
-//         placeholder="Введите ваше имя"
-//       />
-//       <textarea
-//         type="textarea"
-//         id="add-form-text"
-//         class="add-form-text"
-//         placeholder="Введите ваш коментарий"
-//         rows="4"
-//       ></textarea>
-//       <div class="add-form-row">
-//         <button id="add-button" class="add-form-button">Написать</button>
-//       </div>
-//     </div>`
+  const formHtml=`<div class="add-form">
+      <input
+        type="text"
+        id="add-form-name"
+        class="add-form-name"
+        placeholder="Введите ваше имя"
+      />
+      <textarea
+        type="textarea"
+        id="add-form-text"
+        class="add-form-text"
+        placeholder="Введите ваш коментарий"
+        rows="4"
+      ></textarea>
+      <div class="add-form-row">
+        <button id="add-button" class="add-form-button">Написать</button>
+      </div>
+    </div>`
 
 
     const commentsHTML = commentsArray.map((comment,index)=>{
@@ -45,29 +51,29 @@ export function render ({commentsArray, commentsList}) {
       }).join("");
   
 
-      const appHtml =` <h1>Страница входа</h1>
-      <div class="form">
-        <h3 class="form-title">Форма входа</h3>
-        <div class="form-row">
-          <input type="text" id="login-input" class="input" placeholder="Логин" />
-          <input
-            type="text"
-            id="password-input"
-            class="input"
-            placeholder="Пароль"
-          />
-        </div>
-        <br />
-        <button class="button" id="login-button">Войти</button>
-       
-      </div> 
-      ${commentsHTML}`
-      appRendering.innerHTML = appHtml;
+      const appHtml = 
+      `<ul id="comments" class="comments">
+        ${commentsHTML}
+        </ul>
+        ${token ? formHtml :  '<button class="auth"> Авторизоваться </button>'} 
+        `
+
       
-     
-      const addButton = document.getElementById("add-button");
+        
+
+
+      appRendering.innerHTML = appHtml;
+    
+    
+
 
       const adding=()=>{
+  
+        if(!token) return
+
+        const addButton = document.getElementById("add-button");
+        const nameInput = document.getElementById("add-form-name");
+        const textInput = document.getElementById("add-form-text");
 
         addButton.addEventListener('click', (event)=>{
           event.stopPropagation();
@@ -81,7 +87,7 @@ export function render ({commentsArray, commentsList}) {
       
       commentsArray.push({
         name: nameInput.value.replaceAll('>','&gt').replaceAll('<','&lt;'),
-        date: dateForGetRequest(),
+        date: dateForGetRequest(new Date()),
         text: textInput.value.replaceAll('>','&gt').replaceAll('<','&lt;'),
         likes: 0,
         isLike: false,
@@ -89,6 +95,9 @@ export function render ({commentsArray, commentsList}) {
       
       })
       
+      
+
+
        function apiRequestPost() {
         const nameInput = document.getElementById("add-form-name");
         const textInput = document.getElementById("add-form-text");
@@ -143,6 +152,19 @@ export function render ({commentsArray, commentsList}) {
       })
       }
 
+function navToLogin() {
+
+if(token) return
+
+ const authButton = document.querySelector(".auth")
+ authButton.addEventListener("click",()=>{
+  renderLoginPage()
+
+ })
+}
+navToLogin()
+adding()
+
       // addFormHtml.innerHTML = 
       //   `
       //   <ul id="comments" class="comments">
@@ -155,3 +177,6 @@ export function render ({commentsArray, commentsList}) {
 
   
 }
+
+
+

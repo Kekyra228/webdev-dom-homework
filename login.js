@@ -1,5 +1,5 @@
 import { loginUser, setToken, token } from "./api.js"
-import { renderCommentsList } from "./main.js"
+import { commentsArray, renderCommentsList } from "./main.js"
 
 export function renderLoginPage() {
     const appRendering = document.getElementById("app")
@@ -29,12 +29,13 @@ export function renderLoginPage() {
             loginUser({
                 login:loginInput.value,
                 password:passwordInput.value
-            }).then((responseData)=>{
+            })
+            .then((responseData)=>{
             console.log(responseData)
             setToken(responseData.user.token)
-            console.log(token
-              )
-            }).then(()=>{
+            console.log(token)
+            })
+            .then(()=>{
               renderCommentsList(commentsArray)
             })
         })

@@ -1,6 +1,6 @@
 "use strict";
 
-import { getComments } from "./api.js";
+import { getComments, token } from "./api.js";
 import { postComments } from "./api.js";
 import { dateForGetRequest } from "./converDate.js";
 import { render } from "./render.js";
@@ -11,18 +11,17 @@ import { renderLoginPage } from "./login.js";
 
 
   const commentsList = document.getElementById("comments");
-  const nameInput = document.getElementById("add-form-name");
-  const textInput = document.getElementById("add-form-text");
 
-  let commentsArray = [
+
+   export let commentsArray = [
   ];
   
   let isLoading = true;
  
-  renderLoginPage()
+  // renderLoginPage()
 
 
-  const apiRequestGet = () => {
+  export const apiRequestGet = () => {
    getComments().then((responseData)=>{
       console.log(responseData)
 
@@ -38,7 +37,7 @@ import { renderLoginPage } from "./login.js";
       })
     
       isLoading = false;
-      renderCommentsList()
+      renderCommentsList(commentsArray)
     })
   }
 
@@ -61,7 +60,10 @@ import { renderLoginPage } from "./login.js";
         edit(commentsArray);
         
   };
-  renderCommentsList(commentsArray)
+
+
+
+  // renderCommentsList(commentsArray)
 
 //   let isAuto = false;
 
@@ -78,7 +80,7 @@ import { renderLoginPage } from "./login.js";
 
  
   // adding()
-  renderCommentsList(commentsArray)
+  // renderCommentsList(commentsArray)
 
 
   
@@ -92,18 +94,23 @@ import { renderLoginPage } from "./login.js";
 
 
       function likeAdd() {
+     
         const likesButton = document.querySelectorAll(".like-button");
         for (const likeButton of likesButton) {
           likeButton.addEventListener("click",(event)=>{
+            if(!token) {
+              alert("Нужно авторизоваться")
+              return
+            }
             const index = likeButton.dataset.index;
             event.stopPropagation();
             like(commentsArray, index)
-            renderCommentsList();
+            renderCommentsList(commentsArray);
           })
         }
     
       }
-      likeAdd()
+  
 
    function commentsAnswer(){
    
