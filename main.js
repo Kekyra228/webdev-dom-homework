@@ -2,13 +2,12 @@
 
 import { getComments, token } from "./api.js";
 import { postComments } from "./api.js";
-import { dateForGetRequest } from "./converDate.js";
 import { render } from "./render.js";
 import { edit } from "./interaction.js";
 import { like } from "./interaction.js";
 import { answering } from "./interaction.js";
 import { renderLoginPage } from "./login.js";
-// import { format } from "date-fns"
+import { format } from "date-fns"
 
   const commentsList = document.getElementById("comments");
 
@@ -28,7 +27,7 @@ import { renderLoginPage } from "./login.js";
       commentsArray = responseData.comments.map((comment)=>{
           return {
             name: comment.author.name,
-            date: 1,
+            date: format(new Date(comment.date), "yyyy-MM-dd hh.mm.ss"),
             text: comment.text,
             likes: comment.likes,
             isLike: false,

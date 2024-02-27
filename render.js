@@ -1,20 +1,19 @@
 import { postComments, token } from "./api.js";
-import { dateForGetRequest } from "./converDate.js";
 import { renderLoginPage } from "./login.js";
 import { apiRequestGet } from "./main.js";
+import { format } from "date-fns"
 
+export let nameUser;
+export const setNameUser = (newNameUser) => {
+  nameUser = newNameUser;
+};
 
 export function render ({commentsArray, commentsList}) {
   const appRendering = document.getElementById("app")
 
   
   const formHtml=`<div class="add-form">
-      <input
-        type="text"
-        id="add-form-name"
-        class="add-form-name"
-        placeholder="Введите ваше имя"
-      />
+    <input type="text" class="add-form-name" value="${nameUser}" readonly style="background: grey; color: #ffffff;"> 
       <textarea
         type="textarea"
         id="add-form-text"
@@ -51,20 +50,15 @@ export function render ({commentsArray, commentsList}) {
   
 
       const appHtml = 
-      `<ul id="comments" class="comments">
+        `<ul id="comments" class="comments">
         ${commentsHTML}
         </ul>
         ${token ? formHtml :  '<button class="auth"> Авторизоваться </button>'} 
         `
 
-      
-        
-
-
       appRendering.innerHTML = appHtml;
     
-    
-
+  
 
       const adding=()=>{
   
@@ -74,6 +68,8 @@ export function render ({commentsArray, commentsList}) {
         const nameInput = document.getElementById("add-form-name");
         const textInput = document.getElementById("add-form-text");
 
+  
+
         addButton.addEventListener('click', (event)=>{
           event.stopPropagation();
       if (nameInput.value=== "" || textInput.value=== ""){
@@ -81,12 +77,11 @@ export function render ({commentsArray, commentsList}) {
                 return
       }
         textInput.disabled = true;
-        nameInput.disabled = true;
         addButton.textContent = "Комментарий добавялется..."
       
       commentsArray.push({
         name: nameInput.value.replaceAll('>','&gt').replaceAll('<','&lt;'),
-        date: dateForGetRequest(new Date()),
+        date: format(new Date(), "yyyy-MM-dd hh.mm.ss"),
         text: textInput.value.replaceAll('>','&gt').replaceAll('<','&lt;'),
         likes: 0,
         isLike: false,
@@ -127,7 +122,6 @@ export function render ({commentsArray, commentsList}) {
         }) .catch((error)=>{
           
           textInput.disabled = false;
-          nameInput.disabled = false;
           addButton.textContent = "Написать";
       
           if(error.message==="Сервер сломался, попробуй позже"){

@@ -34,15 +34,19 @@ import { renderLoginPage } from "./login.js"
 
     const regNewButtonOnRegPage = document.querySelector(".button-reg-reg")
         regNewButtonOnRegPage.addEventListener("click",()=>{
+            if(loginRegInput.value==="" || nameRegInput.value==="" || passwordRegInput.value=== ""){
+                alert("Введите данные")
+                return
+            }
             regUser (
                 loginRegInput.value,
                 nameRegInput.value,
                 passwordRegInput.value
-            ).then(()=>{renderLoginPage()})
-        
-        
-        
+            ).then(()=>{
+                renderLoginPage()
+            })
+      
+    
     })
  }
 
-  
