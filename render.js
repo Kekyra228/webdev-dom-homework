@@ -72,7 +72,7 @@ export function render ({commentsArray, commentsList}) {
 
         addButton.addEventListener('click', (event)=>{
           event.stopPropagation();
-      if (nameInput.value=== "" || textInput.value=== ""){
+      if ( textInput.value=== ""){
                 console.log("а ну ка пиши коммент")
                 return
       }
@@ -80,7 +80,6 @@ export function render ({commentsArray, commentsList}) {
         addButton.textContent = "Комментарий добавялется..."
       
       commentsArray.push({
-        name: nameInput.value.replaceAll('>','&gt').replaceAll('<','&lt;'),
         date: format(new Date(), "yyyy-MM-dd hh.mm.ss"),
         text: textInput.value.replaceAll('>','&gt').replaceAll('<','&lt;'),
         likes: 0,
@@ -96,15 +95,13 @@ export function render ({commentsArray, commentsList}) {
         const nameInput = document.getElementById("add-form-name");
         const textInput = document.getElementById("add-form-text");
       
-        postComments(textInput.value, nameInput.value)
+        postComments(textInput.value)
         .then((response)=>{
         if(response.status===201){
           apiRequestGet()
       
           textInput.disabled = false;
-          nameInput.disabled = false;
           addButton.textContent = "Написать"
-          nameInput.value="";
           textInput.value=""
         }
         else if (response.status===400){

@@ -19,7 +19,7 @@ export function getComments() {
       })
 }
 
-export function postComments(textInput, nameInput){
+export function postComments(textInput){
   
   return fetch(
     'https://wedev-api.sky.pro/api/v2/ivanova-kit/comments',{
@@ -28,8 +28,7 @@ export function postComments(textInput, nameInput){
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        text: textInput,
-        name: nameInput,
+        text: textInput
         // forceError: true
       })
     }
