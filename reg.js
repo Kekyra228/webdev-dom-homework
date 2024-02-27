@@ -3,7 +3,7 @@ import { renderLoginPage } from "./login.js"
 
 
 
- export function regNewUser () {
+ export function regNewUser() {
     if(token) return
     const appRendering = document.getElementById("app")
 
@@ -19,7 +19,7 @@ import { renderLoginPage } from "./login.js"
         class="input"
         placeholder="Придумайте пароль"
       />
-      <button class="button-reg">Зарегестрироваться</button>
+      <button class="button-reg-reg">Зарегестрироваться</button>
     </div>
     <br />
   </div>
@@ -28,24 +28,20 @@ import { renderLoginPage } from "./login.js"
   appRendering.innerHTML = regHtml
 
 
-  const nameRegInput =document.getElementById("name-reg-input")
-  console.log(nameRegInput)
-  const loginRegInput =document.getElementById("login-reg-input")
-  console.log(loginRegInput)
-  const passwordRegInput =document.getElementById("password-reg-input")
+    const nameRegInput =document.getElementById("name-reg-input")
+    const loginRegInput =document.getElementById("login-reg-input")
+    const passwordRegInput =document.getElementById("password-reg-input")
 
-    regUser (
-        loginRegInput.value,
-        nameRegInput.value,
-        passwordRegInput.value
-    ) .then((responseData)=>{
-        console.log(responseData)
-    })
-
-
-    const regNewButton = document.querySelector(".button-reg")
-        regNewButton.addEventListener("click",()=>{
-        renderLoginPage()
+    const regNewButtonOnRegPage = document.querySelector(".button-reg-reg")
+        regNewButtonOnRegPage.addEventListener("click",()=>{
+            regUser (
+                loginRegInput.value,
+                nameRegInput.value,
+                passwordRegInput.value
+            ).then(()=>{renderLoginPage()})
+        
+        
+        
     })
  }
 

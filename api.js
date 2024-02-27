@@ -56,8 +56,26 @@ export function regUser( loginRegInput,nameRegInput,passwordRegInput) {
       name:nameRegInput,
       password:passwordRegInput
     }),
-  }).then((response) => {
+  }) .then((response) => {
+    if (response.status === 201) {
+      return response;
+    } else if (response.status === 400) {
+      throw new Error("ошибка 400");
+    }
+  })
+  .then((response) => {
     return response.json();
+  })
+  .then((responseData) => {
+    alert("Вы успешно зарегистрировались.");
+
+  })
+  .catch((error) => {
+    if (error.message === "ошибка 400") {
+      alert("Пользователь с такими данными уже есть, попробуйте снова");
+    } else {
+      alert("Кажется, у вас сломался интернет, попробуйте позже");
+    }
   })
 
 }
