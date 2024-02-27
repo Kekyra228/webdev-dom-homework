@@ -1,17 +1,13 @@
-// export let token;
-// export const SetToken=(newToken)=>{
-// token=newToken
-// }
+export let token;
+export const setToken = (newToken) => {
+  token = newToken;
+};
 
-
-
-export const token =
-"asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k"
 
 
 export function getComments() {
     return fetch(
-        'https://wedev-api.sky.pro/api/v1/:ivanova-kit/comments',{
+        'https://wedev-api.sky.pro/api/v2/ivanova-kit/comments',{
           method:"GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -25,7 +21,7 @@ export function getComments() {
 export function postComments(textInput, nameInput){
   
   return fetch(
-    'https://wedev-api.sky.pro/api/v2/:ivanova-kit',{
+    'https://wedev-api.sky.pro/api/v2/ivanova-kit/comments',{
       method:"POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -39,7 +35,7 @@ export function postComments(textInput, nameInput){
   ) 
 }
 
-export function loginUser({ login, password }) {
+export function loginUser( {login, password} ) {
   return fetch(" https://wedev-api.sky.pro/api/user/login", {
     method: "POST",
     body: JSON.stringify({
@@ -49,4 +45,24 @@ export function loginUser({ login, password }) {
   }).then((response) => {
     return response.json();
   });
+}
+
+
+export function regUser( {login, name, password} ) {
+  return fetch(" https://wedev-api.sky.pro/api/user", {
+    method: "POST",
+    body: JSON.stringify({
+      login,
+      name,
+      password,
+    }),
+  }).then((response) => {
+    return response.json();
+  }).then((responseData) => {
+    alert("Вы успешно зарегистрировались.");
+    regLoginElement.value = "";
+    regNameElement.value = "";
+    regPassElement.value = "";
+  })
+  ;
 }

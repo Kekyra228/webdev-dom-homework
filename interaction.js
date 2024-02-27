@@ -14,7 +14,7 @@ export function edit(commentsArray) {
              commentsArray[index].text = editedComment[index].value
           }
 
-          renderCommentsList()
+          renderCommentsList(commentsArray)
         
         })
 
@@ -36,7 +36,7 @@ export function like(commentsArray, index){
     }
 }
 
-export function answering(commentsArray,index){
-    const formInputText = document.querySelector(".add-form-text");
-    formInputText.value = `>${commentsArray[index].text} \n${commentsArray[index].name},`;
-}
+// export function answering(commentsArray,index){
+//     const formInputText = document.querySelector(".add-form-text");
+//     formInputText.value = `>${commentsArray[index].text} \n${commentsArray[index].name},`;
+// }
