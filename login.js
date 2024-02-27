@@ -1,4 +1,6 @@
-import { loginUser } from "./api.js"
+import { loginUser, setToken, token } from "./api.js"
+import { commentsArray, renderCommentsList } from "./main.js"
+import { regNewUser } from "./reg.js"
 
 export function renderLoginPage() {
     const appRendering = document.getElementById("app")
@@ -17,7 +19,8 @@ export function renderLoginPage() {
       <br />
       <button class="button" id="login-button">Войти</button>
       <a href="index.html" id="link-to-tasks">Перейти на страницу задач</a>
-    </div>`
+    </div>
+    <button class="button-reg">Зарегестрироваться</button>`
     appRendering.innerHTML = loginHtml
 
     const buttonGet = document.getElementById("login-button");
@@ -28,8 +31,27 @@ export function renderLoginPage() {
             loginUser({
                 login:loginInput.value,
                 password:passwordInput.value
-            }).then((responseData)=>{
+            })
+            .then((responseData)=>{
             console.log(responseData)
+            setToken(responseData.user.token)
+            console.log(token)
+            })
+            .then(()=>{
+              renderCommentsList(commentsArray)
             })
         })
+
+       
+
+        function navToReg() {
+          if(token) return
+          const regNewButton = document.querySelector(".button-reg")
+          regNewButton.addEventListener("click",()=>{
+            regNewUser ()
+          })
+        }
+      
+      navToReg()
+      
 }
