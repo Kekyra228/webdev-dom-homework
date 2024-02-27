@@ -1,4 +1,5 @@
 import { regUser, token } from "./api.js"
+import { renderLoginPage } from "./login.js"
 
 
 
@@ -18,10 +19,11 @@ import { regUser, token } from "./api.js"
         class="input"
         placeholder="Придумайте пароль"
       />
+      <button class="button-reg">Зарегестрироваться</button>
     </div>
     <br />
   </div>
-  <button class="button-reg">Зарегестрироваться</button>
+  
   `
   appRendering.innerHTML = regHtml
 
@@ -32,15 +34,19 @@ import { regUser, token } from "./api.js"
   console.log(loginRegInput)
   const passwordRegInput =document.getElementById("password-reg-input")
 
-    regUser ({
-        nameUser: nameRegInput.value,
-        login: loginRegInput.value,
-        passwor: passwordRegInput.value
-    }) .then((responseData)=>{
+    regUser (
+        loginRegInput.value,
+        nameRegInput.value,
+        passwordRegInput.value
+    ) .then((responseData)=>{
         console.log(responseData)
     })
 
-     
+
+    const regNewButton = document.querySelector(".button-reg")
+        regNewButton.addEventListener("click",()=>{
+        renderLoginPage()
+    })
  }
 
   

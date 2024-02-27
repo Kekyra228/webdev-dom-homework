@@ -50,7 +50,7 @@ import { renderLoginPage } from "./login.js";
 
   export function renderCommentsList(commentsArray) {
     if (isLoading) {
-        document.getElementById("comments").innerHTML =
+        document.getElementById("app").innerHTML =
           "Пожалуйста подождите, загружаю комментарии...";
         return;
       }
