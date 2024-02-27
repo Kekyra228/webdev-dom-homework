@@ -46,8 +46,6 @@ export function renderLoginPage() {
         })
 
 
-
-    
         function navToReg() {
           const nameRegInput =document.getElementById("name-reg-input")
           const loginRegInput =document.getElementById("login-reg-input")
@@ -72,6 +70,7 @@ export function renderLoginPage() {
           `
           appRendering.innerHTML = regHtml
         
+
           regUser ({
             nameUser: nameRegInput.value,
             login: loginRegInput.value,
@@ -87,11 +86,13 @@ export function renderLoginPage() {
 
 
 
+
          const regNewButton = document.querySelector(".button-reg")
          regNewButton.addEventListener("click",()=>{
            navToReg ()
          })
  
+         
 }
 
 

@@ -73,7 +73,7 @@ export function render ({commentsArray, commentsList}) {
         const textInput = document.getElementById("add-form-text");
         const nameInput = document.getElementById("add-form-name");
         
-        nameInput.innerHTML=loginInput.value,
+        nameInput.value=loginInput.value,
         nameInput.disabled = true;
   
 
