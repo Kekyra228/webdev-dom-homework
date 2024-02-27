@@ -6,28 +6,6 @@ import { apiRequestGet } from "./main.js";
 
 export function render ({commentsArray, commentsList}) {
   const appRendering = document.getElementById("app")
-
-  
-  const formHtml=`<div class="add-form">
-      <input
-        type="text"
-        id="add-form-name"
-        class="add-form-name"
-        placeholder="Введите ваше имя"
-      />
-      <textarea
-        type="textarea"
-        id="add-form-text"
-        class="add-form-text"
-        placeholder="Введите ваш коментарий"
-        rows="4"
-      ></textarea>
-      <div class="add-form-row">
-        <button id="add-button" class="add-form-button">Написать</button>
-      </div>
-    </div>`
-
-
     const commentsHTML = commentsArray.map((comment,index)=>{
         return `<li class="comment">
             <div class="comment-header">
@@ -50,20 +28,39 @@ export function render ({commentsArray, commentsList}) {
       }).join("");
   
 
+      const nameInput = document.getElementById("add-form-name");
+      // const nameInputInForm = nameInput.value
+      const formHtml=`<div class="add-form">
+      <input disabled
+        type="text"
+        id="add-form-name"
+        class="add-form-name"
+        placeholder=${nameInput}
+      />
+      <textarea
+        type="textarea"
+        id="add-form-text"
+        class="add-form-text"
+        placeholder="Введите ваш коментарий"
+        rows="4"
+      ></textarea>
+      <div class="add-form-row">
+        <button id="add-button" class="add-form-button">Написать</button>
+      </div>
+    </div>`
+
+
+
       const appHtml = 
       `<ul id="comments" class="comments">
         ${commentsHTML}
         </ul>
         ${token ? formHtml :  '<button class="auth"> Авторизоваться </button>'} 
         `
+      
+        appRendering.innerHTML = appHtml;
 
-       
-        
 
-
-      appRendering.innerHTML = appHtml;
-
-     
 
       const adding=()=>{
   
@@ -71,15 +68,10 @@ export function render ({commentsArray, commentsList}) {
 
         const addButton = document.getElementById("add-button");
         const textInput = document.getElementById("add-form-text");
-        const nameInput = document.getElementById("add-form-name");
-        
-        nameInput.value=loginInput.value,
-        nameInput.disabled = true;
-  
 
         addButton.addEventListener('click', (event)=>{
           event.stopPropagation();
-      if (nameInput.value=== "" || textInput.value=== ""){
+      if (textInput.value=== ""){
                 console.log("а ну ка пиши коммент")
                 return
       }
@@ -153,18 +145,18 @@ export function render ({commentsArray, commentsList}) {
       })
       }
 
-function navToLogin() {
+      function navToLogin() {
 
-if(token) return
+      if(token) return
 
- const authButton = document.querySelector(".auth")
- authButton.addEventListener("click",()=>{
-  renderLoginPage()
+      const authButton = document.querySelector(".auth")
+      authButton.addEventListener("click",()=>{
+        renderLoginPage()
 
- })
-}
-navToLogin()
-adding()
+      })
+      }
+      navToLogin()
+      adding()
 
 
 }

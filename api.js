@@ -1,4 +1,3 @@
-
 export let token;
 export const setToken = (newToken) => {
   token = newToken;
@@ -36,7 +35,7 @@ export function postComments(textInput, nameInput){
   ) 
 }
 
-export function loginUser({ login, password }) {
+export function loginUser( {login, password} ) {
   return fetch(" https://wedev-api.sky.pro/api/user/login", {
     method: "POST",
     body: JSON.stringify({
@@ -48,37 +47,22 @@ export function loginUser({ login, password }) {
   });
 }
 
-export function regUser ({nameUser, login, password}){
 
-  return fetch("https://wedev-api.sky.pro/api/user", {
-    method: "post",
+export function regUser( {login, name, password} ) {
+  return fetch(" https://wedev-api.sky.pro/api/user", {
+    method: "POST",
     body: JSON.stringify({
-      nameUser,
       login,
-      password
+      name,
+      password,
     }),
+  }).then((response) => {
+    return response.json();
+  }).then((responseData) => {
+    alert("Вы успешно зарегистрировались.");
+    regLoginElement.value = "";
+    regNameElement.value = "";
+    regPassElement.value = "";
   })
-    .then((response) => {
-      if (response.status === 201) {
-        return response;
-      } else if (response.status === 400) {
-        throw new Error("ошибка 400");
-      }
-    })
-    .then((response) => {
-      return response.json();
-    })
-    .then((responseData) => {
-      alert("Вы успешно зарегистрировались.");
-      loginRegInput.value = "";
-      nameRegInput.value = "";
-      passwordRegInput.value = "";
-    })
-    .catch((error) => {
-      if (error.message === "ошибка 400") {
-        alert("Пользователь с такими данными уже есть, попробуйте снова");
-      } else {
-        alert("Кажется, у вас сломался интернет, попробуйте позже");
-      }
-    });
-};
+  ;
+}

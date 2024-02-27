@@ -1,4 +1,4 @@
-import { loginUser, regUser, setToken, token } from "./api.js"
+import { loginUser, setToken, token } from "./api.js"
 import { commentsArray, renderCommentsList } from "./main.js"
 // import { navToReg } from "./reg.js"
 
@@ -47,10 +47,6 @@ export function renderLoginPage() {
 
 
         function navToReg() {
-          const nameRegInput =document.getElementById("name-reg-input")
-          const loginRegInput =document.getElementById("login-reg-input")
-          const passwordRegInput =document.getElementById("password-reg-input")
-        
           const regHtml = `<h1>Страница регистрации</h1>
           <div class="form">
             <h3 class="form-title">Форма регистрации</h3>
@@ -70,21 +66,17 @@ export function renderLoginPage() {
           `
           appRendering.innerHTML = regHtml
         
+          const nameRegInput =document.getElementById("name-reg-input")
+          const loginRegInput =document.getElementById("login-reg-input")
+          const passwordRegInput =document.getElementById("password-reg-input")
 
           regUser ({
-            nameUser: nameRegInput.value,
             login: loginRegInput.value,
+            name: nameRegInput.value,
             passwor: passwordRegInput.value
           })
-          .then((responseData)=>{
-            setToken(responseData.user.token)
-            })
-            .then(()=>{
-              renderLoginPage()
-            })
+        
          }
-
-
 
 
          const regNewButton = document.querySelector(".button-reg")
@@ -92,7 +84,7 @@ export function renderLoginPage() {
            navToReg ()
          })
  
-         
+
 }
 
 

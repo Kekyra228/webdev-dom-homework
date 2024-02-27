@@ -1,12 +1,10 @@
 // import { regUser } from "./api"
+// import { renderLoginPage } from "./login"
 
 
 //  export function navToReg () {
 
 // const appRendering = document.getElementById("app")
-//   const nameRegInput =document.getElementById("name-reg-input")
-//   const loginRegInput =document.getElementById("login-reg-input")
-//   const passwordRegInput =document.getElementById("password-reg-input")
 
 //   const regHtml = `<h1>Страница регистрации</h1>
 //   <div class="form">
@@ -27,17 +25,24 @@
 //   `
 //   appRendering.innerHTML = regHtml
 
-//   regUser ({
-//     nameUser: nameRegInput.value,
-//     login: loginRegInput.value,
-//     passwor: passwordRegInput.value
-//   })
-//   .then((responseData)=>{
-//     setToken(responseData.user.token)
+
+//   const nameRegInput =document.getElementById("name-reg-input")
+//   const loginRegInput =document.getElementById("login-reg-input")
+//   const passwordRegInput =document.getElementById("password-reg-input")
+
+//     regUser ({
+//         nameUser: nameRegInput.value,
+//         login: loginRegInput.value,
+//         passwor: passwordRegInput.value
 //     })
-//     .then(()=>{
-//       renderLoginPage()
-//     })
+//         .then((responseData)=>{
+//         setToken(responseData.user.token)
+//         })
+//         .then(()=>{
+//         renderLoginPage()
+//         })
+
+     
 //  }
 
   
