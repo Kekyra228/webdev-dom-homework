@@ -47,3 +47,27 @@ export function loginUser({ login, password }) {
     return response.json();
   });
 }
+
+export function regUser( {login, name, password} ) {
+  return fetch(" https://wedev-api.sky.pro/api/user", {
+    method: "POST",
+    body: JSON.stringify({
+      login,
+      name,
+      password,
+    }),
+  }) .then((response) => {
+    if (response.status === 201) {
+      return response;
+    } else if (response.status === 400) {
+      throw new Error("ошибка 400");
+    }
+  })
+  .then((response) => {
+    return response.json();
+  })
+  .then((responseData) => {
+    alert("Вы успешно зарегистрировались.");
+    
+  })
+}

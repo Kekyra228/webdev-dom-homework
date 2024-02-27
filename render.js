@@ -4,6 +4,7 @@ import { renderLoginPage } from "./login.js";
 import { apiRequestGet } from "./main.js";
 
 
+
 export function render ({commentsArray, commentsList}) {
   const appRendering = document.getElementById("app")
 
@@ -151,18 +152,16 @@ export function render ({commentsArray, commentsList}) {
       })
       }
 
-function navToLogin() {
+      function navToLogin() {
+      if(token) return
+      const authButton = document.querySelector(".auth")
+      authButton.addEventListener("click",()=>{
+        renderLoginPage()
 
-if(token) return
-
- const authButton = document.querySelector(".auth")
- authButton.addEventListener("click",()=>{
-  renderLoginPage()
-
- })
-}
-navToLogin()
-adding()
+      })
+      }
+      navToLogin()
+      adding()
 
 
 }
