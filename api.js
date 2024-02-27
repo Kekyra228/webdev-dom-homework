@@ -47,3 +47,17 @@ export function loginUser({ login, password }) {
     return response.json();
   });
 }
+
+export function regUser( loginRegInput,nameRegInput,passwordRegInput) {
+  return fetch(" https://wedev-api.sky.pro/api/user", {
+    method: "POST",
+    body: JSON.stringify({
+      login:loginRegInput,
+      name:nameRegInput,
+      password:passwordRegInput
+    }),
+  }).then((response) => {
+    return response.json();
+  })
+
+}

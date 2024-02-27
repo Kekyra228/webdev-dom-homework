@@ -8,7 +8,7 @@ import { edit } from "./interaction.js";
 import { like } from "./interaction.js";
 import { answering } from "./interaction.js";
 import { renderLoginPage } from "./login.js";
-
+// import { format } from "date-fns"
 
   const commentsList = document.getElementById("comments");
 
@@ -28,7 +28,7 @@ import { renderLoginPage } from "./login.js";
       commentsArray = responseData.comments.map((comment)=>{
           return {
             name: comment.author.name,
-            date: dateForGetRequest(comment.date),
+            date: 1,
             text: comment.text,
             likes: comment.likes,
             isLike: false,
@@ -50,7 +50,7 @@ import { renderLoginPage } from "./login.js";
 
   export function renderCommentsList(commentsArray) {
     if (isLoading) {
-        document.getElementById("comments").innerHTML =
+        document.getElementById("app").innerHTML =
           "Пожалуйста подождите, загружаю комментарии...";
         return;
       }
