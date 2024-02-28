@@ -1,17 +1,14 @@
-// export let token;
-// export const SetToken=(newToken)=>{
-// token=newToken
-// }
 
+export let token;
+export const setToken = (newToken) => {
+  token = newToken;
+};
 
-
-export const token =
-"asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k"
 
 
 export function getComments() {
     return fetch(
-        'https://wedev-api.sky.pro/api/v1/:ivanova-kit/comments',{
+        'https://wedev-api.sky.pro/api/v2/ivanova-kit/comments',{
           method:"GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -22,17 +19,16 @@ export function getComments() {
       })
 }
 
-export function postComments(textInput, nameInput){
+export function postComments(textInput){
   
   return fetch(
-    'https://wedev-api.sky.pro/api/v2/:ivanova-kit',{
+    'https://wedev-api.sky.pro/api/v2/ivanova-kit/comments',{
       method:"POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        text: textInput,
-        name: nameInput,
+        text: textInput
         // forceError: true
       })
     }
@@ -49,4 +45,36 @@ export function loginUser({ login, password }) {
   }).then((response) => {
     return response.json();
   });
+}
+
+export function regUser( loginRegInput,nameRegInput,passwordRegInput) {
+  return fetch(" https://wedev-api.sky.pro/api/user", {
+    method: "POST",
+    body: JSON.stringify({
+      login:loginRegInput,
+      name:nameRegInput,
+      password:passwordRegInput
+    }),
+  }) .then((response) => {
+    if (response.status === 201) {
+      return response;
+    } else if (response.status === 400) {
+      throw new Error("ошибка 400");
+    }
+  })
+  .then((response) => {
+    return response.json();
+  })
+  .then((responseData) => {
+    alert("Вы успешно зарегистрировались.");
+
+  })
+  .catch((error) => {
+    if (error.message === "ошибка 400") {
+      alert("Пользователь с такими данными уже есть, попробуйте снова");
+    } else {
+      alert("Кажется, у вас сломался интернет, попробуйте позже");
+    }
+  })
+
 }
